@@ -1,20 +1,23 @@
 #ifndef F_MEDIA_SCREEN_HPP
 #define F_MEDIA_SCREEN_HPP
 #include "fmediaconfig.h"
-#include <cmath>
-#include <vector>
 #include "vec2.hpp"
+#include "line.hpp"
+#include "rect.hpp"
+#include "tri.hpp"
+#include "cir.hpp"
+#include "txt.hpp"
 #include <iostream>
 #include <vector>
-#include "rect.hpp"
-#include "line.hpp"
-#include "tri.hpp"
+#include <cmath>
 class Screen
 {
 public:
     Screen()
     {
         std::cout << "\t ____                                                _     _                 _____           __  __              _   _                 \n\t|  _ \\    ___   __      __   ___   _ __    ___    __| |   | |__    _   _    |  ___|         |  \\/  |   ___    __| | (_)   __ _ \n\t| |_) |  / _ \\  \\ \\ /\\ / /  / _ \\ | '__|  / _ \\  / _` |   | '_ \\  | | | |   | |_     _____  | |\\/| |  / _ \\  / _` | | |  / _` |\n\t|  __/  | (_) |  \\ V  V /  |  __/ | |    |  __/ | (_| |   | |_) | | |_| |   |  _|   |_____| | |  | | |  __/ | (_| | | | | (_| |\n\t|_|      \\___/    \\_/\\_/    \\___| |_|     \\___|  \\__,_|   |_.__/   \\__, |   |_|             |_|  |_|  \\___|  \\__,_| |_|  \\__,_|\n\t\t\t\t\t\t\t\t\t   |___/\n\n";
+        /*Txt a;
+        a.p("Powered by F-Media");*/
     }
 
     bool m[SCREEN_HEIGHT][SCREEN_WIDTH] = {false};
@@ -42,7 +45,7 @@ public:
         std::cout << "O";
         for (int i = 0; i < SCREEN_WIDTH; i++)
             std::cout << "-";
-        std::cout << "#";
+        std::cout << "#\n";
     }
 
     void add(vec2 a, bool v = true)
@@ -58,20 +61,71 @@ public:
         }
     }
 
+    void add(line l, bool v = true)
+    {
+        this->add(l.gen(), v);
+    }
+
     void add(Fig::Rect a, bool v = true)
     {
-        this->add(line(a.pos, vec2(a.pos.x + a.w, a.pos.y)).gen());
-        this->add(line(a.pos, vec2(a.pos.x, a.pos.y + a.h)).gen());
-        this->add(line(vec2(a.pos.x + a.w, a.pos.y), vec2(a.pos.x + a.w, a.pos.y + a.h)).gen());
-        this->add(line(vec2(a.pos.x, a.pos.y + a.h), vec2(a.pos.x + a.w, a.pos.y + a.h)).gen());
+        if (!a.is_full)
+        {
+            this->add(line(a.pos, vec2(a.pos.x + a.w, a.pos.y)), v);
+            this->add(line(a.pos, vec2(a.pos.x, a.pos.y + a.h)), v);
+            this->add(line(vec2(a.pos.x + a.w, a.pos.y), vec2(a.pos.x + a.w, a.pos.y + a.h)), v);
+            this->add(line(vec2(a.pos.x, a.pos.y + a.h), vec2(a.pos.x + a.w, a.pos.y + a.h)), v);
+        }
+        else
+        {
+            for (int i = 0; i < a.h; i++)
+            {
+                for (int j = 0; j < a.w; j++)
+                {
+                    this->add(vec2(j + a.pos.x, i + a.pos.y), v);
+                }
+            }
+        }
     }
 
     void add(Fig::Tri t, bool v = true)
     {
-        // ab   bc  ca
-        this->add(line(t.a, t.b).gen());
-        this->add(line(t.b, t.c).gen());
-        this->add(line(t.c, t.a).gen());
+        this->add(line(t.a, t.b).gen(), v);
+        this->add(line(t.b, t.c).gen(), v);
+        this->add(line(t.c, t.a).gen(), v);
+    }
+
+    void add(Fig::Cir c, bool v = true)
+    {
+        float x = c.r - 1.0F;
+        float y = 0.0F;
+        float d_x = 1.0F;
+        float d_y = 1.0F;
+        float e = d_x - (c.r * 2.0F);
+
+        while (x >= y)
+        {
+            this->add(vec2(c.pos.x + x, c.pos.y + y), v);
+            this->add(vec2(c.pos.x + y, c.pos.y + x), v);
+            this->add(vec2(c.pos.x - y, c.pos.y + x), v);
+            this->add(vec2(c.pos.x - x, c.pos.y + y), v);
+            this->add(vec2(c.pos.x - x, c.pos.y - y), v);
+            this->add(vec2(c.pos.x - y, c.pos.y - x), v);
+            this->add(vec2(c.pos.x + y, c.pos.y - x), v);
+            this->add(vec2(c.pos.x + x, c.pos.y - y), v);
+
+            if (e > 0)
+            {
+                d_x += 2.0F;
+                e += d_x - (c.r * 2.0F);
+                x--;
+            }
+            else if (e <= 0)
+            {
+                e += d_y;
+                d_y += 2.0F;
+                y++;
+            }
+        }
     }
 };
 #endif

@@ -1,5 +1,6 @@
 #ifndef F_MEDIA_VEC2_HPP
 #define F_MEDIA_VEC2_HPP
+#include "fmediaconfig.h"
 class vec2
 {
 public:

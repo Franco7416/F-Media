@@ -8,6 +8,19 @@ namespace Fig
     public:
         vec2 pos;
         float r = 0.0F;
+
+        Cir() {}
+        Cir(vec2 pos, float r)
+        {
+            this->pos = pos;
+            this->r = r;
+        }
+
+        void operator=(Fig::Cir a)
+        {
+            this->pos = a.pos;
+            this->r = a.r;
+        }
     };
 };
 #endif

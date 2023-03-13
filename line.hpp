@@ -1,5 +1,6 @@
 #ifndef F_MEDIA_LINE_HPP
 #define F_MEDIA_LINE_HPP
+#include "fmediaconfig.h"
 #include "vec2.hpp"
 #include <vector>
 #include <cmath>
@@ -63,8 +64,6 @@ public:
 
         for (int i = 0; i < l.size(); i++)
         {
-            /*l[i].x = int(l[i].x);
-            l[i].y = int(l[i].y);*/
             l[i].x = std::round(l[i].x);
             l[i].y = std::round(l[i].y);
         }
