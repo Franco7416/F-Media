@@ -9,6 +9,7 @@ namespace Fig
         vec2 a;
         vec2 b;
         vec2 c;
+        bool is_full = false;
 
         Tri() {}
         Tri(vec2 a, vec2 b, vec2 c)
@@ -25,5 +26,6 @@ namespace Fig
             this->c = a.c;
         }
     };
+    // bool hasin(vec2 v) -> saca si v esta adentro del triangulo
 };
 #endif

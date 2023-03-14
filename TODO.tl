@@ -3,7 +3,7 @@
     - simbolos
 # figuras
     - rellenar
-        - triangulos
+        ! triangulos
             - los 2 videos descargados mas recientes son del algoritmo
         - circulos
     - colisciones
