@@ -1,25 +1,28 @@
-#ifndef F_MEDIA_FIG_CIR_HPP
-#define F_MEDIA_FIG_CIR_HPP
+#ifndef F_MEDIA_CIR_HPP
+#define F_MEDIA_CIR_HPP
 #include "vec2.hpp"
-namespace Fig
+namespace FM
 {
     class Cir
     {
     public:
-        vec2 pos;
+        FM::vec2 pos;
         float r = 0.0F;
+        bool is_full = false;
 
         Cir() {}
-        Cir(vec2 pos, float r)
+        Cir(FM::vec2 pos, float r, bool is_full = false)
         {
             this->pos = pos;
             this->r = r;
+            this->is_full = is_full;
         }
 
-        void operator=(Fig::Cir a)
+        void operator=(FM::Cir a)
         {
             this->pos = a.pos;
             this->r = a.r;
+            this->is_full = a.is_full;
         }
     };
 };

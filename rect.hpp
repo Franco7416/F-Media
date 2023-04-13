@@ -1,18 +1,18 @@
-#ifndef F_MEDIA_FIG_RECT_HPP
-#define F_MEDIA_FIG_RECT_HPP
+#ifndef F_MEDIA_RECT_HPP
+#define F_MEDIA_RECT_HPP
 #include "vec2.hpp"
-namespace Fig
+namespace FM
 {
     class Rect
     {
     public:
-        vec2 pos;
+        FM::vec2 pos;
         float w = 0.0F;
         float h = 0.0F;
         bool is_full = false;
 
         Rect() {}
-        Rect(vec2 pos, float w, float h, bool is_full = false)
+        Rect(FM::vec2 pos, float w, float h, bool is_full = false)
         {
             this->pos = pos;
             this->w = w;
@@ -20,7 +20,7 @@ namespace Fig
             this->is_full = is_full;
         }
 
-        void operator=(Fig::Rect a)
+        void operator=(FM::Rect a)
         {
             this->pos = a.pos;
             this->w = a.w;
